@@ -53,9 +53,7 @@ impl<T> Receiver<T> {
         loop {
             match inner.queue.pop_front() {
                 Some(t) => {
-                    if !inner.queue.is_empty() {
-                        std::mem::swap(&mut self.buffer, &mut inner.queue);
-                    }
+                    std::mem::swap(&mut self.buffer, &mut inner.queue);
                     return Some(t);
                 }
                 None if inner.senders == 0 => return None,
